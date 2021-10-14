@@ -8,12 +8,11 @@
     <link rel="stylesheet" href="/static/style.css">
     <script src="../public/js/bootstrap.min.js"></script>
     <script src="/static/script.js"></script>
-    <script type="text/javascript" src="jquery.autosave.js"></script>
-		<script type="text/javascript">
+	<script type="text/javascript">
 			$(function () {
 				$('form *').autosave();
 			});
-		</script>
+	</script>
 </head>
 <body>
     {{#if showTitle}}
@@ -34,11 +33,11 @@
                     <tr>
                         <td>
                             <label> First name*:</label> <br>
-                            <input type="text" required class="form-control" name="firstName" value={{{firstName}}} >
+                            <input type="text" required class="form-control" name="firstName"  id="firstName" value={{firstName}} onChange={{localStorage.setItem("firstName",$('#firstName').val();)}}>
                         </td>
                         <td>
                             <label> Last name*:</label> <br>
-                            <input type="text" required class="form-control" name="lastName" value={{{lastName}}}>
+                            <input type="text" required class="form-control" name="lastName">
                         </td>
                     </tr>
                     <tr>
