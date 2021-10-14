@@ -56,12 +56,12 @@ app.post('/submit',  [
         .withMessage('phoneNumber is required'),
     check('arrival').trim()
         .isLength({ min: 1 })
-        .isDate().isAfter('10:00:00','hour')
-        .withMessage('arrival time is required and after 10:00'),
+        .isDecimal({min:10})
+        .withMessage('arrival time is required and after 10'),
     check('departure').trim()
         .isLength({ min: 1 })
-        .isDate().isBefore('23:00:00', 'hour')
-        .withMessage('departure time is required and before 23:00'),
+        .isDecimal({max:23})
+        .withMessage('departure time is required and before 23'),
     check('mail',"email  is required").trim()
     .isEmail().withMessage('email format is required ')],
     (req, res) => {
@@ -79,7 +79,7 @@ app.post('/submit',  [
         });
     } else {
         title= 'Can not submit form',
-        req.session.errors = validationResult(req).array();
+        req.session.errors = errors;
         req.session.success = false;
         console.log("errors", errors);
         console.log(" req.session.success ",  req.session.success );
