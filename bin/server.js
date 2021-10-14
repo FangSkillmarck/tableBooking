@@ -36,8 +36,34 @@ app.get('/', function (req, res, next) {
 });
 
 const { check, validationResult } = require('express-validator');
-app.post('/submit',  
-    (req, res,next) => {
+app.post('/submit',  [
+    check('firstName')
+        .not()
+        .isEmpty()
+        .withMessage('firstName is required'),
+    check('lastName')
+        .not()
+        .isEmpty()
+        .withMessage('lastName is required'),
+    check('amount')
+        .not()
+        .isEmpty()
+        .withMessage(' Number of persons is required'),    
+    check('phoneNumber')
+        .not()
+        .isEmpty()
+        .withMessage('phoneNumber is required'),
+    check('arrival')
+        .not()
+        .isEmpty()
+        .withMessage('arrival is required'),
+    check('departure')
+        .not()
+        .isEmpty()
+        .withMessage('departure is required'),
+    check('mail',"email is required")
+    .isEmail()],
+    (req, res) => {
     console.log(req.body);
     const { firstName, mail, phoneNumber } = req.body
      var errors = validationResult(req).array();
@@ -50,7 +76,8 @@ app.post('/submit',
         });
        
     } else {
-                req.session.errors = validationResult(req).array();
+        title: 'Can not submit form',
+        req.session.errors = validationResult(req).array();
         req.session.success = false;
         console.log("errors", errors);
     }
