@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{{title}}}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/script.js"></script>
+</head>
+<body>
+     <div class="container">
+        <div class="col-md-12">
+    <h1>Book table</h1>
+    <form id="infoForm" action="/submit" method="POST">
+        <table>
+            <tr>
+                <td>
+                    First name*:<br>
+                    <input type="text" name="firstName">
+                </td>
+                <td>
+                    Last name*:<br>
+                    <input type="text" name="lastName">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Number of persons (max 20)*:<br>
+                    <input type="text" name="amount">
+                </td>
+                <td>
+                    Type:<br>
+                    <input type="radio" name="type" value="business"> Business<br>
+                    <input type="radio" name="type" value="private" checked> Private<br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Email*:<br>
+                    <input type="text" name="mail">
+                </td>
+                <td>
+                    Phone*:<br>
+                    <input type="text" name="phoneNumber">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Arrival (between 10:00 and 23:00)*:<br>
+                    <input type="text" name="arrival">
+                </td>
+                <td>
+                    Departure (between 10:00 and 23:00)*:<br>
+                    <input type="text" name="departure">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Comment:<br>
+                    <textarea name="comment" rows="10" cols="50"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a id="submit" class="button" href="#">Book</a>
+                    <a id="reset" class="button" href="#">Cancel</a>
+                </td>
+            </tr>
+        </table>
+        <p>* - Required fields</p>
+    </form>
+    </div>
+    </div>
+</body>
+</html>
