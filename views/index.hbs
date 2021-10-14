@@ -13,6 +13,12 @@
 				$('form *').autosave();
 			});
 	</script>
+    <script  type="text/javascript">
+            function store(){
+                var inputEmail= document.getElementById("email");
+                localStorage.setItem("email", inputEmail.value);
+                }
+</script>
 </head>
 <body>
     {{#if showTitle}}
@@ -32,43 +38,43 @@
             <table>
                     <tr>
                         <td>
-                            <label> First name*:</label> <br>
-                            <input type="text" required class="form-control" name="firstName"  id="firstName" value={{firstName}} onChange={{localStorage.setItem("firstName",$('#firstName').val();)}}>
+                            <label for="firstName"> First name*:</label> <br>
+                            <input type="text" required class="form-control" name="firstName"  id="firstName"  >
                         </td>
                         <td>
-                            <label> Last name*:</label> <br>
-                            <input type="text" required class="form-control" name="lastName">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Number of persons (max 20)*:<br>
-                            <input type="text" required class="form-control" name="amount"  min="1" max="20">
-                        </td>
-                        <td>
-                            Type:<br>
-                            <input type="radio" name="type" class="form-control" value="business"> Business<br>
-                            <input type="radio" name="type" class="form-control" value="private" checked> Private<br>
+                            <label  for="lastName"> Last name*:</label> <br>
+                            <input type="text" required class="form-control" name="lastName"  id="lastName" >
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Email*:<br>
-                            <input type="text" required class="form-control" name="mail">
+                            <label  for="amount"> Number of persons (max 20)*:</label> <br>
+                            <input type="text" required class="form-control" name="amount" id="amount" min="1" max="20">
                         </td>
                         <td>
-                            Phone*:<br>
-                            <input type="text" required class="form-control" name="phoneNumber">
+                            <label  for="Type">Type: </label><br>
+                            <input type="radio" name="type"  id="type" class="form-control" value="business"> Business<br>
+                            <input type="radio" name="type"  id="type" class="form-control" value="private" checked> Private<br>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Arrival (between 10:00 and 23:00)*:<br>
-                            <input type="text" required class="form-control" name="arrival" min="10:00:00" max="23:00:00">
+                            <label  for="mail">Email*: </label><br>
+                            <input type="text" required class="form-control" name="mail" id="mail">
                         </td>
                         <td>
-                            Departure (between 10:00 and 23:00)*:<br>
-                            <input type="text" required class="form-control" name="departure" min="10:00:00" max="23:00:00">
+                            <label  for="phoneNumber">Phone*: </label><br>
+                            <input type="text" required class="form-control" name="phoneNumber" id="phoneNumber">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <label  for="arrival">Arrival (between 10:00 and 23:00)*:</label><br>
+                            <input type="text" required class="form-control" name="arrival" id="arrival" min="10:00:00" max="23:00:00">
+                        </td>
+                        <td>
+                             <label  for="departure">Departure (between 10:00 and 23:00)*</label>:<br>
+                            <input type="text" required class="form-control" name="departure" id="departure" min="10:00:00" max="23:00:00">
                         </td>
                     </tr>
                     <tr>
