@@ -10,3 +10,14 @@
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
 }
+
+.container {
+  margin-top: 30px;
+  max-width: 500px;
+}
+
+.alert {
+  padding: 5px 15px;
+  font-size: 13.5px;
+  margin-bottom: 10px;
+}

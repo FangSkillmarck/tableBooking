@@ -3,16 +3,15 @@
 <head>
     <meta charset="utf-8">
     <title>{{{title}}}</title>
-    <link href="../public/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="../public/css/styles.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/static/style.css">
-    <script src="../public/js/bootstrap.min.js"></script>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    <script src="/static/bootstrap.min.js"></script>
     <script src="/static/script.js"></script>
-	<script type="text/javascript">
+	{{!-- <script type="text/javascript">
 			$(function () {
 				$('form *').autosave();
 			});
-	</script>
+	</script> --}}
     <script  type="text/javascript">
             function store(){
                 var inputEmail= document.getElementById("email");
@@ -21,6 +20,10 @@
 </script>
 </head>
 <body>
+    <nav class="navbar navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Express Form Data Validation</a>
+    </nav>
+
     {{#if showTitle}}
     {{title}}
      {{/if}}
@@ -28,6 +31,7 @@
      <div class="container">
         <div class="col-md-12">
             {{# if errors }}
+            <strong>Error submitting the form.</strong> Please correct the errors below.
             {{# each errors }}
             <p class="alert alert-danger"> {{ this.msg }}</p>
             {{/each}}
@@ -37,13 +41,15 @@
             <form id="infoForm" action="/submit" method="POST">
             <table>
                     <tr>
-                        <td>
+                        <td><div class="form-group"></div>
                             <label for="firstName"> First name*:</label> <br>
-                            <input type="text" required class="form-control" name="firstName"  id="firstName" value={{{document.getElementById("firstName")}}}  >
+                            <input type="text" required class="form-control" name="firstName"  id="firstName"  >
+                            </div>
                         </td>
-                        <td>
+                        <td><div class="form-group"></div>
                             <label  for="lastName"> Last name*:</label> <br>
                             <input type="text" required class="form-control" name="lastName"  id="lastName" >
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -52,9 +58,11 @@
                             <input type="number" required class="form-control" name="amount" id="amount" min="1" max="20">
                         </td>
                         <td>
-                            <label  for="type">Type: </label><br>
-                            <input type="radio" name="type"  id="type" class="form-control" value="business">  Business<br>
-                            <input type="radio" name="type"  id="type" class="form-control" value="private" checked> Private<br>
+                            <label  for="type">Type: </label>  <br>
+                            Business 
+                            <input type="radio" name="type"  id="type"  value="business">  <br>
+                            Private
+                            <input type="radio" name="type"  id="type" value="private" checked>  <br>
                         </td>
                     </tr>
                     <tr>
@@ -73,7 +81,7 @@
                             <input type="text" required class="form-control" name="arrival" id="arrival" min="10:00:00" max="23:00:00">
                         </td>
                         <td>
-                             <label  for="departure">Departure (between 10:00 and 23:00)*</label>:<br>
+                             <label  for="departure">Departure (between 10:00 and 23:00)*:</label><br>
                             <input type="text" required class="form-control" name="departure" id="departure" min="10:00:00" max="23:00:00">
                         </td>
                     </tr>
