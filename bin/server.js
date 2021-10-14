@@ -70,7 +70,7 @@ app.post('/submit',  [
     const { firstName,lastName,amount, mail,arrival,departure, phoneNumber } = req.body
      var errors = validationResult(req).array();
      console.log("errors", errors);
-    if (errors.any) { 
+    if (firstName && mail && phoneNumber &&lastName && amount && arrival && departure) { 
         req.session.success = true;
                 res.render('success', {
                     title: 'Thanks for submitting form',
