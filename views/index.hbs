@@ -3,66 +3,84 @@
 <head>
     <meta charset="utf-8">
     <title>{{{title}}}</title>
+    <link href="../public/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../public/css/styles.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/static/style.css">
+    <script src="../public/js/bootstrap.min.js"></script>
     <script src="/static/script.js"></script>
+    <script type="text/javascript" src="jquery.autosave.js"></script>
+		<script type="text/javascript">
+			$(function () {
+				$('form *').autosave();
+			});
+		</script>
 </head>
 <body>
-   {{{title}}}
+    {{#if showTitle}}
+    {{title}}
+     {{/if}}
+ 
      <div class="container">
         <div class="col-md-12">
+            {{# if errors }}
+            {{# each errors }}
+            <p class="alert alert-danger">{{ this.msg }}</p>
+            {{/each}}
+            {{/if}}
+
             <h1>Book table</h1>
             <form id="infoForm" action="/submit" method="POST">
-                <table>
+            <table>
                     <tr>
                         <td>
-                            First name*:<br>
-                            <input type="text" name="firstName">
+                            <label> First name*:</label> <br>
+                            <input type="text" required class="form-control" name="firstName" value={{{firstName}}} >
                         </td>
                         <td>
-                            Last name*:<br>
-                            <input type="text" name="lastName">
+                            <label> Last name*:</label> <br>
+                            <input type="text" required class="form-control" name="lastName" value={{{lastName}}}>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             Number of persons (max 20)*:<br>
-                            <input type="text" name="amount">
+                            <input type="text" required class="form-control" name="amount"  min="1" max="20">
                         </td>
                         <td>
                             Type:<br>
-                            <input type="radio" name="type" value="business"> Business<br>
-                            <input type="radio" name="type" value="private" checked> Private<br>
+                            <input type="radio" name="type" class="form-control" value="business"> Business<br>
+                            <input type="radio" name="type" class="form-control" value="private" checked> Private<br>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             Email*:<br>
-                            <input type="text" name="mail">
+                            <input type="text" required class="form-control" name="mail">
                         </td>
                         <td>
                             Phone*:<br>
-                            <input type="text" name="phoneNumber">
+                            <input type="text" required class="form-control" name="phoneNumber">
                         </td>
                     </tr>
                     <tr>
                         <td>
                             Arrival (between 10:00 and 23:00)*:<br>
-                            <input type="text" name="arrival">
+                            <input type="text" required class="form-control" name="arrival" min="10:00:00" max="23:00:00">
                         </td>
                         <td>
                             Departure (between 10:00 and 23:00)*:<br>
-                            <input type="text" name="departure">
+                            <input type="text" required class="form-control" name="departure" min="10:00:00" max="23:00:00">
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
                             Comment:<br>
-                            <textarea name="comment" rows="10" cols="50"></textarea>
+                            <textarea name="comment" class="form-control" rows="10" cols="50"></textarea>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <a id="submit" class="button" href="#">Book</a>
+                            <a id="submit" onclick="store()" class="button" href="#">Book</a>
                             <a id="reset" class="button" href="#">Cancel</a>
                         </td>
                     </tr>

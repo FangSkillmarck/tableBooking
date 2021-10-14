@@ -13,6 +13,8 @@ var app = express();
 app.set('view engine', 'hbs');
 app.set('views', path.resolve(__dirname, '../views/'));
 
+app.enable('view cache');
+
 app.use(bodyParser.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({
@@ -29,6 +31,7 @@ app.use(session({
 app.get('/', function (req, res, next) {
     res.render('index', {
         title: 'Welcome, please fill out form',
+        showTitle: true,
         success: req.session.success,
         errors: req.session.errors
     });
@@ -37,39 +40,41 @@ app.get('/', function (req, res, next) {
 
 const { check, validationResult } = require('express-validator');
 app.post('/submit',  [
-    check('firstName')
-        .isLength({ min: 1 })
-        .withMessage('firstName is required'),
-    check('lastName')
-        .not()
-        .isEmpty()
-        .withMessage('lastName is required'),
-    check('amount',' Number of persons is required, max 20')
-        .isLength({ min: 1 })
+    check('firstName').trim()
+        .isLength({ min: 1 }).escape()
+        .withMessage('firstName is required')
+        .isAlpha().withMessage('Name must be alphabet letters.'),
+    check('lastName').trim()
+        .isLength({ min: 1 }).escape()
+        .withMessage('lastName is required')
+        .isAlpha().withMessage('Name must be alphabet letters.'),
+    check('amount',' Number of persons is required, max 20').trim()
+        .isLength({ min: 1 }).escape()
         .isInt(),
-    check('phoneNumber')
+    check('phoneNumber').trim()
         .isLength({ min: 1 })
         .isMobilePhone()
         .withMessage('phoneNumber is required'),
-    check('arrival')
+    check('arrival').trim()
         .not()
         .isEmpty()
         .withMessage('arrival is required'),
-    check('departure')
+    check('departure').trim()
         .not()
         .isEmpty()
         .withMessage('departure is required'),
-    check('mail',"email is required")
+    check('mail',"email is required").trim()
     .isEmail()],
     (req, res) => {
     console.log(req.body);
     const { firstName,lastName,amount, mail,arrival,departure, phoneNumber } = req.body
      var errors = validationResult(req).array();
      console.log("errors", errors);
-    if (firstName && mail && phoneNumber &&lastName && amount && arrival && departure) { 
+    if (errors.any) { 
         req.session.success = true;
                 res.render('success', {
                     title: 'Thanks for submitting form',
+                    showTitle: true,
                     data: req.body
         });
     } else {
