@@ -28,16 +28,36 @@ app.use(session({
 
 app.get('/', function (req, res, next) {
     res.render('index', {
-        title: 'Please fill out form'
+        title: 'Welcome, please fill out form',
+        success: req.session.success,
+        errors: req.session.errors
     });
+    req.session.errors = null;
 });
 
-app.post('/submit', function (req, res, next) {
+const { check, validationResult } = require('express-validator');
+
+app.post('/submit',  [
+    check('firstName')
+        .not()
+        .isEmpty()
+        .withMessage('Name is required'),
+    check('email', 'Email is required')
+        .isEmail(),
+], (req, res) => {
     console.log(req.body);
-    res.render('success', {
-        title: 'Thanks for submitting form',
-        data: req.body
-    });
+    var errors = validationResult(req).array();
+        if (errors) {
+            req.session.errors = errors;
+            req.session.success = false;
+        } else {
+            req.session.success = true;
+            res.render('success', {
+                title: 'Thanks for submitting form',
+                data: req.body
+            });
+        }
+ 
 });
 
 app.use('/static', serveStatic(path.resolve(__dirname, '../static/')));
