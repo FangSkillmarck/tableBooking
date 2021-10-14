@@ -7,8 +7,14 @@
     <script src="/static/script.js"></script>
 </head>
 <body>
+    {{title}}
      <div class="container">
         <div class="col-md-12">
+            {{# if errors }}
+              {{# each errors }}
+                <p class="alert alert-danger">{{ this.msg }}</p>
+              {{/each}}
+            {{/if}}
             <h1>Book table</h1>
             <form id="infoForm" action="/submit" method="POST">
                 <table>
