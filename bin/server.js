@@ -36,29 +36,26 @@ app.get('/', function (req, res, next) {
 });
 
 const { check, validationResult } = require('express-validator');
-
-app.post('/submit',  [
-    check('firstName')
-        .not()
-        .isEmpty()
-        .withMessage('Name is required'),
-    check('email', 'Email is required')
-        .isEmail(),
-], (req, res) => {
+app.post('/submit',  
+    (req, res,next) => {
     console.log(req.body);
-    var errors = validationResult(req).array();
-        if (errors) {
-            req.session.errors = errors;
-            req.session.success = false;
-        } else {
-            req.session.success = true;
-            res.render('success', {
-                title: 'Thanks for submitting form',
-                data: req.body
-            });
-        }
- 
+    const { firstName, mail, phoneNumber } = req.body
+     var errors = validationResult(req).array();
+     console.log("errors", errors);
+    if (firstName && mail && phoneNumber) { 
+        req.session.success = true;
+                res.render('success', {
+                    title: 'Thanks for submitting form',
+                    data: req.body
+        });
+       
+    } else {
+                req.session.errors = validationResult(req).array();
+        req.session.success = false;
+        console.log("errors", errors);
+    }
 });
+
 
 app.use('/static', serveStatic(path.resolve(__dirname, '../static/')));
 
