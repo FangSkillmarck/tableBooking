@@ -7,7 +7,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 var path = require('path');
-var hbs = require('hbs');
+const hbs = require('hbs');
 var app = express();
 
 app.set('view engine', 'hbs');
@@ -46,25 +46,24 @@ app.post('/submit',  [
         .isAlpha().withMessage('Name must be alphabet letters.'),
     check('lastName').trim()
         .isLength({ min: 1 }).escape()
-        .withMessage('lastName is required')
         .isAlpha().withMessage('Name must be alphabet letters.'),
     check('amount',' Number of persons is required, max 20').trim()
         .isLength({ min: 1 }).escape()
-        .isInt(),
+        .isInt({max:20}),
     check('phoneNumber').trim()
         .isLength({ min: 1 })
         .isMobilePhone()
         .withMessage('phoneNumber is required'),
     check('arrival').trim()
-        .not()
-        .isEmpty()
-        .withMessage('arrival is required'),
+        .isLength({ min: 1 })
+        .isDate().isAfter('10:00:00','hour')
+        .withMessage('arrival time is required and after 10:00'),
     check('departure').trim()
-        .not()
-        .isEmpty()
-        .withMessage('departure is required'),
-    check('mail',"email is required").trim()
-    .isEmail()],
+        .isLength({ min: 1 })
+        .isDate().isBefore('23:00:00', 'hour')
+        .withMessage('departure time is required and before 23:00'),
+    check('mail',"email  is required").trim()
+    .isEmail().withMessage('email format is required ')],
     (req, res) => {
     console.log(req.body);
     const { firstName,lastName,amount, mail,arrival,departure, phoneNumber } = req.body
@@ -72,7 +71,8 @@ app.post('/submit',  [
      console.log("errors", errors);
     if (firstName && mail && phoneNumber &&lastName && amount && arrival && departure) { 
         req.session.success = true;
-                res.render('success', {
+        console.log(" req.session.success ",  req.session.success );
+        res.render('success', {
                     title: 'Thanks for submitting form',
                     showTitle: true,
                     data: req.body
@@ -82,6 +82,7 @@ app.post('/submit',  [
         req.session.errors = validationResult(req).array();
         req.session.success = false;
         console.log("errors", errors);
+        console.log(" req.session.success ",  req.session.success );
     }
 });
 
