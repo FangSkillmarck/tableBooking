@@ -29,7 +29,7 @@
         <div class="col-md-12">
             {{# if errors }}
             {{# each errors }}
-            <p class="alert alert-danger">{{ this.msg }}</p>
+            <p class="alert alert-danger"> {{ this.msg }}</p>
             {{/each}}
             {{/if}}
 
@@ -39,7 +39,7 @@
                     <tr>
                         <td>
                             <label for="firstName"> First name*:</label> <br>
-                            <input type="text" required class="form-control" name="firstName"  id="firstName"  >
+                            <input type="text" required class="form-control" name="firstName"  id="firstName" value={{{document.getElementById("firstName")}}}  >
                         </td>
                         <td>
                             <label  for="lastName"> Last name*:</label> <br>
@@ -49,11 +49,11 @@
                     <tr>
                         <td>
                             <label  for="amount"> Number of persons (max 20)*:</label> <br>
-                            <input type="text" required class="form-control" name="amount" id="amount" min="1" max="20">
+                            <input type="number" required class="form-control" name="amount" id="amount" min="1" max="20">
                         </td>
                         <td>
-                            <label  for="Type">Type: </label><br>
-                            <input type="radio" name="type"  id="type" class="form-control" value="business"> Business<br>
+                            <label  for="type">Type: </label><br>
+                            <input type="radio" name="type"  id="type" class="form-control" value="business">  Business<br>
                             <input type="radio" name="type"  id="type" class="form-control" value="private" checked> Private<br>
                         </td>
                     </tr>
