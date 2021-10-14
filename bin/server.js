@@ -38,20 +38,18 @@ app.get('/', function (req, res, next) {
 const { check, validationResult } = require('express-validator');
 app.post('/submit',  [
     check('firstName')
-        .not()
-        .isEmpty()
+        .isLength({ min: 1 })
         .withMessage('firstName is required'),
     check('lastName')
         .not()
         .isEmpty()
         .withMessage('lastName is required'),
-    check('amount')
-        .not()
-        .isEmpty()
-        .withMessage(' Number of persons is required'),    
+    check('amount',' Number of persons is required, max 20')
+        .isLength({ min: 1 })
+        .isInt(),
     check('phoneNumber')
-        .not()
-        .isEmpty()
+        .isLength({ min: 1 })
+        .isMobilePhone()
         .withMessage('phoneNumber is required'),
     check('arrival')
         .not()
@@ -65,18 +63,17 @@ app.post('/submit',  [
     .isEmail()],
     (req, res) => {
     console.log(req.body);
-    const { firstName, mail, phoneNumber } = req.body
+    const { firstName,lastName,amount, mail,arrival,departure, phoneNumber } = req.body
      var errors = validationResult(req).array();
      console.log("errors", errors);
-    if (firstName && mail && phoneNumber) { 
+    if (firstName && mail && phoneNumber &&lastName && amount && arrival && departure) { 
         req.session.success = true;
                 res.render('success', {
                     title: 'Thanks for submitting form',
                     data: req.body
         });
-       
     } else {
-        title: 'Can not submit form',
+        title= 'Can not submit form',
         req.session.errors = validationResult(req).array();
         req.session.success = false;
         console.log("errors", errors);
