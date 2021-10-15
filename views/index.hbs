@@ -7,17 +7,12 @@
     <link rel="stylesheet" href="/static/style.css" type="text/css">
     <script src="/static/bootstrap.min.js"></script>
     <script src="/static/script.js"></script>
-	{{!-- <script type="text/javascript">
-			$(function () {
-				$('form *').autosave();
-			});
-	</script> --}}
     <script  type="text/javascript">
             function store(){
-                var inputEmail= document.getElementById("email");
+                var inputEmail= JSON.parse(document.getElementById("email"));
                 localStorage.setItem("email", inputEmail.value);
                 }
-</script>
+    </script>
 </head>
 <body> 
     {{#if showTitle}}

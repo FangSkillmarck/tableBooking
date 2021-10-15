@@ -78,7 +78,7 @@ app.post('/submit',  [
                     data: req.body
         });
     } else {
-        title= 'Can not submit form',
+        title= 'Can not submit form';
         req.session.errors = errors;
         req.session.success = false;
         console.log("errors", errors);
